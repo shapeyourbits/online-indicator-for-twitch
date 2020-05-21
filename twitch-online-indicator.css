@@ -1,0 +1,32 @@
+#toi-container {
+    position: fixed;
+    z-index: 10000000;
+    padding: 8px;
+    background-image: linear-gradient(to bottom right, #000, #666);
+	box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	cursor: pointer;
+	color: #ffffff;
+}
+#toi-container a.toi-twitch {
+    text-decoration:none;
+	cursor: pointer;
+}
+#toi-container:hover a.toi-twitch {
+    text-decoration:none !important;
+}
+#toi-container:hover a.toi-twitch span {
+	transition: all 0.5s linear;
+}
+
+#toi-container a.toi-twitch .toi-status-text-live {
+    display: none;
+}
+#toi-container a.toi-twitch .toi-status-text-offline {
+    display: inline;
+}
+#toi-container.live a.toi-twitch .toi-status-text-live {
+    display: inline;
+}
+#toi-container.live a.toi-twitch .toi-status-text-offline {
+    display: none;
+}
