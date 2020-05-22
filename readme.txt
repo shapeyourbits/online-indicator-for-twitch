@@ -76,6 +76,8 @@ Yes completely free!
 Absolutely check out our <a href="https://bespokeweb.dev">website</a>.
 
 == Changelog ==
+= 1.1 =
+* Public Release
 
 = 1.0 =
 * Development Release
