@@ -1,2 +1,19 @@
 name: WordPress Plugin SVN Deploy
 uses: nk-o/action-wordpress-plugin-deploy@v0.0.1
+on:
+  push:
+    tags:
+    - "v*"
+  pull_request:
+    tags:
+    - "v*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: WordPress Plugin Deploy
+        uses: nk-o/action-wordpress-plugin-deploy@master
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
