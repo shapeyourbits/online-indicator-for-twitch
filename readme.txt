@@ -1,4 +1,4 @@
-=== Twitch Online Indicator ===
+=== Online Indicator For Twitch ===
 Contributors: ShapeYourBits
 Author: ShapeYourBits
 Author URI: https://bespokeweb.dev/
@@ -17,13 +17,10 @@ Add a customisable streaming indicator to your WordPress site to let your visito
 
 A discreet method to highlight your live twitch stream. Works with most themes and looks good out of the box and entirely customisable.
 
-=After installation you'll need to enter your Twitch channel name, and your secret Client ID.=
-You can create a client ID at <a href="https://dev.twitch.tv/console/apps/create">Twitch Dev Console</a>
-We suggest using the Category: "Website Integration" and the OAuth URL: localhost
+=After installation you'll need to enter your Twitch channel name.=
 
 You can customise the following settings, with a live preview of your changes using the Appearance Customiser built into WordPress:
 
-* How often to check if the channel is online.
 * Whether to hide the indicator when the channel is offline.
 * Whether to open the stream in a new window if clicked.
 * The text to display when Live.
@@ -49,15 +46,15 @@ You can customise the following settings, with a live preview of your changes us
 = To install the plugin automatically: =
 
 * Through WordPress admin, use the menu: Plugin > Add new
-* Search for Twitch Online Indicator
+* Search for Online Indicator For Twitch
 * Click on install then click activate link
 
 = To install the plugin manually: =
 
-* Download and unzip the plugin twitch-online-indicator.zip
-* Upload /twitch-online-indicator/ to the /wp-content/plugins/ directory
+* Download and unzip the plugin online-indicator-for-twitch.zip
+* Upload /online-indicator-for-twitch/ to the /wp-content/plugins/ directory
 * Activate the plugin through the 'Plugins' screen in WordPress
-* Use the "Appearance->Customize->Twitch Online Indicator" screen to configure and customize the plugin
+* Use the "Appearance->Customize->Online Indicator For Twitch" screen to configure and customize the plugin
 
 = Support =
 
@@ -67,10 +64,10 @@ Before leaving a review >> Feel free to ask questions here in the support sectio
 
 = I installed the plugin and it isn't working! =
 
-Did you configure your channel name and client ID in the settings?
-Check you have filled in these two REQUIRED settings in Apperance >> Customise >> Twitch Online Indicator >> Main Settings.
+Did you configure your channel name in the settings?
+Check you have filled in this REQUIRED setting in Apperance >> Customise >> Online Indicator For Twitch >> Main Settings.
 
-= Is Twitch Online Indicator free? =
+= Is Online Indicator For Twitch free? =
 
 Yes completely free!
 

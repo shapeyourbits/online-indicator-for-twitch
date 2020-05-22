@@ -1,4 +1,4 @@
-#toi-container {
+#oift-container {
     position: fixed;
     z-index: 10000000;
     padding: 8px;
@@ -7,26 +7,26 @@
 	cursor: pointer;
 	color: #ffffff;
 }
-#toi-container a.toi-twitch {
+#oift-container a.oift-twitch {
     text-decoration:none;
 	cursor: pointer;
 }
-#toi-container:hover a.toi-twitch {
+#oift-container:hover a.oift-twitch {
     text-decoration:none !important;
 }
-#toi-container:hover a.toi-twitch span {
+#oift-container:hover a.oift-twitch span {
 	transition: all 0.5s linear;
 }
 
-#toi-container a.toi-twitch .toi-status-text-live {
+#oift-container a.oift-twitch .oift-status-text-live {
     display: none;
 }
-#toi-container a.toi-twitch .toi-status-text-offline {
+#oift-container a.oift-twitch .oift-status-text-offline {
     display: inline;
 }
-#toi-container.live a.toi-twitch .toi-status-text-live {
+#oift-container.live a.oift-twitch .oift-status-text-live {
     display: inline;
 }
-#toi-container.live a.toi-twitch .toi-status-text-offline {
+#oift-container.live a.oift-twitch .oift-status-text-offline {
     display: none;
 }
