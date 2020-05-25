@@ -15,7 +15,7 @@ Add a customisable streaming indicator to your WordPress site to let your visito
 
 == Description ==
 
-A discreet method to highlight your live twitch stream. Works with most themes and looks good out of the box and entirely customisable.
+A discreet method to highlight your live twitch stream. Works with most themes, looks good out of the box and is entirely customisable.
 
 = After installation you'll need to enter your Twitch channel name. =
 
@@ -29,7 +29,7 @@ You can customise the following settings, with a live preview of your changes us
 * How far from the top/bottom/left/right in pixels.
 * Whether to scroll with the content or remain in a fixed position
 * The colour of the background, text colour, live text colour, hover text colour, and live hover text colour.
-* Whether to round the corners of the indicator (and by how many pixels) (the indicator will remove the rounded corners on one side if set to be against the edge of the window.
+* Whether to round the corners of the indicator (and by how many pixels). The indicator will remove the rounded corners on one side if set to be against the edge of the window.
 * Whether to underline the link on hover.
 * Whether to hide below a certain width/resolution (for example on mobile).
 
