@@ -17,7 +17,7 @@ Add a customisable streaming indicator to your WordPress site to let your visito
 
 A discreet method to highlight your live twitch stream. Works with most themes and looks good out of the box and entirely customisable.
 
-=After installation you'll need to enter your Twitch channel name.=
+= After installation you'll need to enter your Twitch channel name. =
 
 You can customise the following settings, with a live preview of your changes using the Appearance Customiser built into WordPress:
 
