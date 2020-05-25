@@ -2,3 +2,4 @@
 /.github
 .distignore
 .gitignore
+/assets
