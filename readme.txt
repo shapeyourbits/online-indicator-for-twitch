@@ -5,8 +5,8 @@ Author URI: https://bespokeweb.dev/
 Plugin URI: https://bespokeweb.dev/plugins/twitch/
 Tags: twitch, twitch tv, twitch.tv, twitch online status, twitch live status, twitch stream status, live stream, streaming
 Donate link: https://bespokeweb.dev/
-Requires at least: 5.0
-Tested up to: 5.4
+Requires at least: 5.7
+Tested up to: 6.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -88,4 +88,4 @@ Update through the automatic WordPress updater, all content and configuration wi
 
 == Requirements ==
 
-	PHP 5.6+, 7, 7.1, 7.2 & 7.3 recommended for better performance, WordPress 5.0+
+	PHP 5.6+, 7, 7.1, 7.2 & 7.3 recommended for better performance, WordPress 5.7+
