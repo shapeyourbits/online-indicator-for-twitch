@@ -160,7 +160,7 @@ function oift_theme_customizer( $wp_customize ) {
 	function oift_footer() {
 	?>
         <?php if( get_theme_mod('oift_channel_name') != '') { ?>
-            <div id="oift-container"><a class="oift-twitch" <?php if( get_theme_mod('oift_new_window') != '') { ?>target="_blank"<?php } ?> href="<?php } if(wp_is_using_https()){ ?>https<?php }else{ ?>http<?php } ?>://www.twitch.tv/<?php echo get_theme_mod('oift_channel_name'); ?>">
+            <div id="oift-container"><a class="oift-twitch" <?php if( get_theme_mod('oift_new_window') != '') { ?>target="_blank"<?php } ?> href="<?php if(wp_is_using_https()){ ?>https<?php }else{ ?>http<?php } ?>://www.twitch.tv/<?php echo get_theme_mod('oift_channel_name'); ?>">
                 <span class="oift-status-text-live">
                     <?php if( get_theme_mod('oift_live_text') != '') { ?>
                         <?php echo get_theme_mod('oift_live_text'); ?>
