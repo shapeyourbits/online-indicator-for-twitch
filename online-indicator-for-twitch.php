@@ -160,7 +160,7 @@ function oift_theme_customizer( $wp_customize ) {
 	function oift_footer() {
 	?>
         <?php if( get_theme_mod('oift_channel_name') != '') { ?>
-            <div id="oift-container"><a class="oift-twitch" <?php if( get_theme_mod('oift_new_window') != '') { ?>target="_blank"<?php } ?> href="<?php if(wp_is_using_https()){ ?>https<?php }else{ ?>http<?php } ?>://www.twitch.tv/<?php echo get_theme_mod('oift_channel_name'); ?>">
+            <div id="oift-container"><a class="oift-twitch" <?php if( get_theme_mod('oift_new_window') != '') { ?>target="_blank"<?php } ?> href="https://www.twitch.tv/<?php echo get_theme_mod('oift_channel_name'); ?>">
                 <span class="oift-status-text-live">
                     <?php if( get_theme_mod('oift_live_text') != '') { ?>
                         <?php echo get_theme_mod('oift_live_text'); ?>
@@ -186,7 +186,7 @@ function oift_theme_customizer( $wp_customize ) {
     add_action('wp_footer','oift_footer');
 
     function oift_front_end_scripts() {
-        wp_register_script( 'oift-twitch', 'http://embed.twitch.tv/embed/v1.js', array(), '1.0', true ); // one day wordpress will support crossorigin="anonymous"
+        wp_register_script( 'oift-twitch', 'https://embed.twitch.tv/embed/v1.js', array(), '1.0', true ); // one day wordpress will support crossorigin="anonymous"
         wp_enqueue_script('oift-twitch');
         wp_add_inline_script( 'oift-twitch', "
         var oift_stream = new Twitch.Embed('oift-embed', {width: 340,height: 400,channel: '".get_theme_mod('oift_channel_name')."',layout: 'video'});
