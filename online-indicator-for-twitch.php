@@ -3,7 +3,7 @@
 Plugin Name: Online Indicator for Twitch
 Plugin URI: https://bespokeweb.dev/plugins/twitch/
 Description: Add a streaming indicator to let your visitors know when your Twitch channel is live.
-Version: 1.0
+Version: 1.2
 Author: ShapeYourBits
 Author URI: https://bespokeweb.dev/
 Text Domain: online-indicator-for-twitch
