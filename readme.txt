@@ -76,7 +76,7 @@ Yes completely free!
 Absolutely check out our <a href="https://bespokeweb.dev">website</a>.
 
 == Changelog ==
-= 1.2 =
+= 1.3.2 =
 * Small change to z-index to use 100000 instead of 10000000 to allow it to appear under certain lightbox overlays.
 
 = 1.1 =
