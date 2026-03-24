@@ -3,7 +3,7 @@ Contributors: ShapeYourBits
 Author: ShapeYourBits
 Author URI: https://www.shapeyourbits.co.uk/
 Plugin URI: https://www.shapeyourbits.co.uk/plugins/twitch/
-Tags: twitch, twitch tv, twitch.tv, twitch online status, twitch live status, twitch stream status, live stream, streaming
+Tags: twitch, twitch online status, twitch live status, twitch stream status, streaming
 Donate link: https://www.shapeyourbits.co.uk/
 Requires at least: 5.7
 Tested up to: 6.7
@@ -76,6 +76,9 @@ Yes completely free!
 Absolutely check out our <a href="https://www.shapeyourbits.co.uk/">website</a>.
 
 == Changelog ==
+= 1.3.4 =
+* While updating the release compatibility did a security audit and improved the escaping of admin variables into the output. This was low risk, but on multi-site installations it could have been used by an a admin to try to gain superadmin.
+
 = 1.3.3 =
 * Tested up to 6.7
 

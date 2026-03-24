@@ -3,7 +3,7 @@
 Plugin Name: Online Indicator for Twitch
 Plugin URI: https://www.shapeyourbits.co.uk/plugins/twitch/
 Description: Add a streaming indicator to let your visitors know when your Twitch channel is live.
-Version: 1.3.3
+Version: 1.3.4
 Author: ShapeYourBits
 Author URI: https://www.shapeyourbits.co.uk/
 Text Domain: online-indicator-for-twitch
@@ -20,7 +20,7 @@ function oift_theme_customizer( $wp_customize ) {
 
                 /* channel name */
                 $wp_customize->add_setting('oift_channel_name',array('default' => '','sanitize_callback' => 'sanitize_oift_channel_name',));
-                function sanitize_oift_channel_name($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_channel_name($input) {return preg_replace('/[^a-zA-Z0-9_]/', '', $input);}
                 $wp_customize->add_control('oift_channel_name',array('type' => 'text','label' => __('Channel name (REQUIRED)','online-indicator-for-twitch'),'description' => __('Enter your Twitch channel name in order to display stream status.','online-indicator-for-twitch'),'section' => 'oift_main_section',));
                 
                 /* hide if feed offline */
@@ -35,12 +35,12 @@ function oift_theme_customizer( $wp_customize ) {
                 
                 /* live text */
                 $wp_customize->add_setting('oift_live_text',array('default' => '','sanitize_callback' => 'sanitize_oift_live_text',));
-                function sanitize_oift_live_text($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_live_text($input) {return sanitize_text_field($input);}
                 $wp_customize->add_control('oift_live_text',array('type' => 'text','label' => __('Status text if stream is live','online-indicator-for-twitch'),'description' => __('If empty, defaults to "LIVE on Twitch"','online-indicator-for-twitch'),'section' => 'oift_main_section',));
                 
                 /* offline text */
                 $wp_customize->add_setting('oift_offline_text',array('default' => '','sanitize_callback' => 'sanitize_oift_offline_text',));
-                function sanitize_oift_offline_text($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_offline_text($input) {return sanitize_text_field($input);}
                 $wp_customize->add_control('oift_offline_text',array('type' => 'text','label' => __('Status text if stream is offline','online-indicator-for-twitch'),'description' => __('If empty, defaults to "OFFLINE on Twitch".','online-indicator-for-twitch'),'section' => 'oift_main_section',));
         
             // Positioning
@@ -54,7 +54,9 @@ function oift_theme_customizer( $wp_customize ) {
                 /* vertical placemenet */
                 $wp_customize->add_setting('oift_placement',array(
                     'default' => 'top',
+                    'sanitize_callback' => 'sanitize_oift_placement',
                 ));
+                function sanitize_oift_placement($input) {return in_array($input, array('top', 'bottom'), true) ? $input : 'top';}
                 $wp_customize->add_control('oift_placement',array(
                     'type' => 'select',
                     'label' => __('Vertical placement','online-indicator-for-twitch'),
@@ -68,7 +70,9 @@ function oift_theme_customizer( $wp_customize ) {
                 /* horizontal placemenet */
                 $wp_customize->add_setting('oift_placement_horizontal',array(
                     'default' => 'left',
+                    'sanitize_callback' => 'sanitize_oift_placement_horizontal',
                 ));
+                function sanitize_oift_placement_horizontal($input) {return in_array($input, array('left', 'right'), true) ? $input : 'left';}
                 $wp_customize->add_control('oift_placement_horizontal',array(
                     'type' => 'select',
                     'label' => __('Horizontal placement','online-indicator-for-twitch'),
@@ -81,12 +85,12 @@ function oift_theme_customizer( $wp_customize ) {
                 
                 /* top/bottom distance */
                 $wp_customize->add_setting('oift_vertical_distance',array('default' => '','sanitize_callback' => 'sanitize_oift_vertical_distance',));
-                function sanitize_oift_vertical_distance($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_vertical_distance($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_vertical_distance',array('type' => 'text','label' => __('Top/bottom distance (in pixels)','online-indicator-for-twitch'),'description' => __('Example: 50 (if empty, defaults to 50).','online-indicator-for-twitch'),'section' => 'oift_positioning_section',));
                 
                 /* left distance */
                 $wp_customize->add_setting('oift_horizontal_distance',array('default' => '','sanitize_callback' => 'sanitize_oift_horizontal_distance',));
-                function sanitize_oift_horizontal_distance($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_horizontal_distance($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_horizontal_distance',array('type' => 'text','label' => __('Left/right distance (in pixels)','online-indicator-for-twitch'),'description' => __('Example: 50 (if empty, defaults to 20).','online-indicator-for-twitch'),'section' => 'oift_positioning_section',));
             
             // Graphics
@@ -124,7 +128,7 @@ function oift_theme_customizer( $wp_customize ) {
                 
                 /* rounded corners */
                 $wp_customize->add_setting('oift_rounded_corners',array('default' => '','sanitize_callback' => 'sanitize_oift_rounded_corners',));
-                function sanitize_oift_rounded_corners($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_rounded_corners($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_rounded_corners',array('type' => 'text','label' => __('Rounded corners (in pixels)','online-indicator-for-twitch'),'description' => __('Example: 5 (if empty, defaults to 0).','online-indicator-for-twitch'),'section' => 'oift_graphics_section',));
         
                 /* disable status text underline */
@@ -137,7 +141,7 @@ function oift_theme_customizer( $wp_customize ) {
 
                 /* smaller than */
                 $wp_customize->add_setting('oift_smaller_than',array('sanitize_callback' => 'sanitize_oift_smaller_than',));
-                function sanitize_oift_smaller_than($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_smaller_than($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_smaller_than',array(
                     'type' => 'text',
                     'label' => __('Hide at certain width/resolution','online-indicator-for-twitch'),
@@ -147,7 +151,7 @@ function oift_theme_customizer( $wp_customize ) {
                 
                 /* larger than */
                 $wp_customize->add_setting('oift_larger_than',array('sanitize_callback' => 'sanitize_oift_larger_than',));
-                function sanitize_oift_larger_than($input) {return wp_kses_post(force_balance_tags($input));}
+                function sanitize_oift_larger_than($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_larger_than',array(
                     'type' => 'text',
                     'description' => __('..and:','online-indicator-for-twitch'),
@@ -160,17 +164,17 @@ function oift_theme_customizer( $wp_customize ) {
 	function oift_footer() {
 	?>
         <?php if( get_theme_mod('oift_channel_name') != '') { ?>
-            <div id="oift-container"><a class="oift-twitch" <?php if( get_theme_mod('oift_new_window') != '') { ?>target="_blank"<?php } ?> href="https://www.twitch.tv/<?php echo get_theme_mod('oift_channel_name'); ?>">
+            <div id="oift-container"><a class="oift-twitch" <?php if( get_theme_mod('oift_new_window') != '') { ?>target="_blank"<?php } ?> href="https://www.twitch.tv/<?php echo esc_attr(get_theme_mod('oift_channel_name')); ?>">
                 <span class="oift-status-text-live">
                     <?php if( get_theme_mod('oift_live_text') != '') { ?>
-                        <?php echo get_theme_mod('oift_live_text'); ?>
+                        <?php echo esc_html(get_theme_mod('oift_live_text')); ?>
                     <?php } else { ?>
                         <?php esc_html_e( 'LIVE on Twitch', 'online-indicator-for-twitch' ); ?>
                     <?php } ?>
                 </span>
                 <span class="oift-status-text-offline">
                     <?php if( get_theme_mod('oift_offline_text') != '') { ?>
-                        <?php echo get_theme_mod('oift_offline_text'); ?>
+                        <?php echo esc_html(get_theme_mod('oift_offline_text')); ?>
                     <?php } else { ?>
                         <?php esc_html_e( 'OFFLINE on Twitch', 'online-indicator-for-twitch' ); ?>
                     <?php } ?>
@@ -189,7 +193,7 @@ function oift_theme_customizer( $wp_customize ) {
         wp_register_script( 'oift-twitch', 'https://embed.twitch.tv/embed/v1.js', array(), '1.0', true ); // one day wordpress will support crossorigin="anonymous"
         wp_enqueue_script('oift-twitch');
         wp_add_inline_script( 'oift-twitch', "
-        var oift_stream = new Twitch.Embed('oift-embed', {width: 340,height: 400,channel: '".get_theme_mod('oift_channel_name')."',layout: 'video'});
+        var oift_stream = new Twitch.Embed('oift-embed', {width: 340,height: 400,channel: '".esc_js(get_theme_mod('oift_channel_name'))."',layout: 'video'});
         var oift_intervalTimer;
         oift_stream.addEventListener(Twitch.Embed.VIDEO_READY, function() {
             oift_stream.setMuted(true);
@@ -231,7 +235,7 @@ function oift_theme_customizer( $wp_customize ) {
     function oift_configuration_missing() {
         ?>
         <div class="notice notice-warning is-dismissible">
-            <p><?php _e( 'Online Indicator for Twitch Plugin: You need to <a href="customize.php?autofocus[section]=oift_main_section">configure</a> your twitch channel name.', 'oift-configure' ); ?></p>
+            <p><?php _e( 'Online Indicator for Twitch Plugin: You need to <a href="customize.php?autofocus[section]=oift_main_section">configure</a> your twitch channel name.', 'online-indicator-for-twitch' ); ?></p>
         </div>
         <?php
     }
@@ -243,31 +247,31 @@ function oift_theme_customizer( $wp_customize ) {
         <style>
 		<?php if( get_theme_mod('oift_background_color') != '') { ?>/* background color */
 		#oift-container {
-			background-color:<?php echo get_theme_mod('oift_background_color') ?>;
+			background-color:<?php echo esc_attr(get_theme_mod('oift_background_color')) ?>;
 			background-image: none;
 			box-shadow: none;
 		}
 		<?php } ?>
 			
 		/* status text color */
-		#oift-container a.oift-twitch span.oift-status-text-live { color:<?php if( get_theme_mod('oift_status_text_color_live') != '') { ?><?php echo get_theme_mod('oift_status_text_color_live'); ?><?php } else { ?>#32CD32<?php } ?>; }
-		#oift-container a.oift-twitch span.oift-status-text-offline { color:<?php if( get_theme_mod('oift_status_text_color') != '') { ?><?php echo get_theme_mod('oift_status_text_color'); ?><?php } else { ?>#ffffff<?php } ?>; }
+		#oift-container a.oift-twitch span.oift-status-text-live { color:<?php if( get_theme_mod('oift_status_text_color_live') != '') { ?><?php echo esc_attr(get_theme_mod('oift_status_text_color_live')); ?><?php } else { ?>#32CD32<?php } ?>; }
+		#oift-container a.oift-twitch span.oift-status-text-offline { color:<?php if( get_theme_mod('oift_status_text_color') != '') { ?><?php echo esc_attr(get_theme_mod('oift_status_text_color')); ?><?php } else { ?>#ffffff<?php } ?>; }
 			
 		/* status text hover */
-		#oift-container:hover a, #oift-container:hover a.oift-twitch span.oift-status-text-live { color:<?php if( get_theme_mod('oift_status_text_hover_color_live') != '') { ?><?php echo get_theme_mod('oift_status_text_hover_color_live'); ?><?php } else { ?>#ffffff<?php } ?>; }
-		#oift-container:hover a, #oift-container:hover a.oift-twitch span.oift-status-text-offline { color:<?php if( get_theme_mod('oift_status_text_hover_color') != '') { ?><?php echo get_theme_mod('oift_status_text_hover_color'); ?><?php } else { ?>#FF0000<?php } ?>; }
+		#oift-container:hover a, #oift-container:hover a.oift-twitch span.oift-status-text-live { color:<?php if( get_theme_mod('oift_status_text_hover_color_live') != '') { ?><?php echo esc_attr(get_theme_mod('oift_status_text_hover_color_live')); ?><?php } else { ?>#ffffff<?php } ?>; }
+		#oift-container:hover a, #oift-container:hover a.oift-twitch span.oift-status-text-offline { color:<?php if( get_theme_mod('oift_status_text_hover_color') != '') { ?><?php echo esc_attr(get_theme_mod('oift_status_text_hover_color')); ?><?php } else { ?>#FF0000<?php } ?>; }
 
 		<?php if( get_theme_mod('oift_rounded_corners') != '') { ?> /* rounded corners */
 			
         /* left positioning */
 		#oift-container {
-			border-top-right-radius:<?php echo get_theme_mod('oift_rounded_corners'); ?>px;
-			border-bottom-right-radius:<?php echo get_theme_mod('oift_rounded_corners'); ?>px;
+			border-top-right-radius:<?php echo esc_attr(get_theme_mod('oift_rounded_corners')); ?>px;
+			border-bottom-right-radius:<?php echo esc_attr(get_theme_mod('oift_rounded_corners')); ?>px;
 			<?php if( get_theme_mod('oift_horizontal_distance') != '0') { ?>
-			border-top-left-radius:<?php echo get_theme_mod('oift_rounded_corners'); ?>px;
-			border-bottom-left-radius:<?php echo get_theme_mod('oift_rounded_corners'); ?>px;
+			border-top-left-radius:<?php echo esc_attr(get_theme_mod('oift_rounded_corners')); ?>px;
+			border-bottom-left-radius:<?php echo esc_attr(get_theme_mod('oift_rounded_corners')); ?>px;
 			<?php } ?>
-			padding: <?php echo get_theme_mod('oift_rounded_corners'); ?>px;
+			padding: <?php echo esc_attr(get_theme_mod('oift_rounded_corners')); ?>px;
 		}
 		<?php if( get_theme_mod('oift_placement_horizontal') == 'right') { ?>/* right positioning */
 		#oift-container {
@@ -275,24 +279,24 @@ function oift_theme_customizer( $wp_customize ) {
 			border-top-right-radius:0px;
 			border-bottom-right-radius:0px;
 			<?php } ?>
-			border-top-left-radius:<?php echo get_theme_mod('oift_rounded_corners'); ?>px;
-			border-bottom-left-radius:<?php echo get_theme_mod('oift_rounded_corners'); ?>px;
+			border-top-left-radius:<?php echo esc_attr(get_theme_mod('oift_rounded_corners')); ?>px;
+			border-bottom-left-radius:<?php echo esc_attr(get_theme_mod('oift_rounded_corners')); ?>px;
 		}
 		<?php } } ?>
 		<?php if( get_theme_mod('oift_absolute_position') != '') { ?>#oift-container { position:absolute; }<?php } ?>
 		#oift-container {
-            top:<?php if( get_theme_mod('oift_vertical_distance') != '') { ?><?php echo get_theme_mod('oift_vertical_distance'); ?><?php } else { ?>50<?php } ?>px;
-            left:<?php if( get_theme_mod('oift_horizontal_distance') != '') { ?><?php echo get_theme_mod('oift_horizontal_distance'); ?><?php } else { ?>20<?php } ?>px;
+            top:<?php if( get_theme_mod('oift_vertical_distance') != '') { ?><?php echo esc_attr(get_theme_mod('oift_vertical_distance')); ?><?php } else { ?>50<?php } ?>px;
+            left:<?php if( get_theme_mod('oift_horizontal_distance') != '') { ?><?php echo esc_attr(get_theme_mod('oift_horizontal_distance')); ?><?php } else { ?>20<?php } ?>px;
 		}
 		<?php if( get_theme_mod('oift_placement') == 'bottom') { ?>/* bottom placement */
 		#oift-container {
 			top:auto;
-			bottom:<?php if( get_theme_mod('oift_vertical_distance') != '') { ?><?php echo get_theme_mod('oift_vertical_distance'); ?><?php } else { ?>50<?php } ?>px;
+			bottom:<?php if( get_theme_mod('oift_vertical_distance') != '') { ?><?php echo esc_attr(get_theme_mod('oift_vertical_distance')); ?><?php } else { ?>50<?php } ?>px;
 		}
 		<?php } ?><?php if( get_theme_mod('oift_placement_horizontal') == 'right') { ?>/* right placement + distances */
 		#oift-container {
 			left:auto;
-			right:<?php if( get_theme_mod('oift_horizontal_distance') != '') { ?><?php echo get_theme_mod('oift_horizontal_distance'); ?><?php } else { ?>20<?php } ?>px;
+			right:<?php if( get_theme_mod('oift_horizontal_distance') != '') { ?><?php echo esc_attr(get_theme_mod('oift_horizontal_distance')); ?><?php } else { ?>20<?php } ?>px;
 		}
 		<?php } ?>
 		<?php if( get_theme_mod('oift_no_underline') != '') { ?>/* no status text underline */
@@ -304,7 +308,7 @@ function oift_theme_customizer( $wp_customize ) {
 		<?php } ?>
         
 		/* hide between resolutions */
-		@media ( min-width:<?php echo get_theme_mod('oift_smaller_than'); ?>px) and (max-width:<?php echo get_theme_mod('oift_larger_than'); ?>px) {
+		@media ( min-width:<?php echo esc_attr(get_theme_mod('oift_smaller_than')); ?>px) and (max-width:<?php echo esc_attr(get_theme_mod('oift_larger_than')); ?>px) {
 			#oift-container { display:none !important; }
 		}
 		</style>
