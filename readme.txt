@@ -6,8 +6,9 @@ Plugin URI: https://www.shapeyourbits.co.uk/plugins/twitch/
 Tags: twitch, twitch online status, twitch live status, twitch stream status, streaming
 Donate link: https://www.shapeyourbits.co.uk/
 Requires at least: 5.7
+Requires PHP: 7.2
 Tested up to: 6.7
-Stable tag: trunk
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
