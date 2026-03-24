@@ -1,13 +1,13 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /*
-Plugin Name: Online Indicator for Twitch
+Plugin Name: Online Indicator For Twitch
 Plugin URI: https://www.shapeyourbits.co.uk/plugins/twitch/
 Description: Add a streaming indicator to let your visitors know when your Twitch channel is live.
-Version: 1.3.4
+Version: 1.3.5
 Author: ShapeYourBits
 Author URI: https://www.shapeyourbits.co.uk/
 Text Domain: online-indicator-for-twitch
-Domain Path: /languages
 License: GPL2
 */
 
@@ -19,44 +19,44 @@ function oift_theme_customizer( $wp_customize ) {
             $wp_customize->add_section('oift_main_section',array('title' => __( 'Main Settings (REQUIRED)','online-indicator-for-twitch' ),'panel' => 'oift_panel','priority' => 1));
 
                 /* channel name */
-                $wp_customize->add_setting('oift_channel_name',array('default' => '','sanitize_callback' => 'sanitize_oift_channel_name',));
-                function sanitize_oift_channel_name($input) {return preg_replace('/[^a-zA-Z0-9_]/', '', $input);}
+                $wp_customize->add_setting('oift_channel_name',array('default' => '','sanitize_callback' => 'oift_sanitize_channel_name',));
+                function oift_sanitize_channel_name($input) {return preg_replace('/[^a-zA-Z0-9_]/', '', $input);}
                 $wp_customize->add_control('oift_channel_name',array('type' => 'text','label' => __('Channel name (REQUIRED)','online-indicator-for-twitch'),'description' => __('Enter your Twitch channel name in order to display stream status.','online-indicator-for-twitch'),'section' => 'oift_main_section',));
                 
                 /* hide if feed offline */
-                $wp_customize->add_setting('oift_offline_hide',array('sanitize_callback' => 'sanitize_oift_offline_hide',));
-                function sanitize_oift_offline_hide( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
+                $wp_customize->add_setting('oift_offline_hide',array('sanitize_callback' => 'oift_sanitize_offline_hide',));
+                function oift_sanitize_offline_hide( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
                 $wp_customize->add_control('oift_offline_hide',array('type' => 'checkbox','label' => __('Hide when offline','online-indicator-for-twitch'), 'description' => __('If checked, the stream status will be shown only when channel is actively streaming.','online-indicator-for-twitch'), 'section' => 'oift_main_section',));
                 
                 /* open in new window */
-                $wp_customize->add_setting('oift_new_window',array('sanitize_callback' => 'sanitize_oift_new_window',));
-                function sanitize_oift_new_window( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
+                $wp_customize->add_setting('oift_new_window',array('sanitize_callback' => 'oift_sanitize_new_window',));
+                function oift_sanitize_new_window( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
                 $wp_customize->add_control('oift_new_window',array('type' => 'checkbox','label' => __('Open in new window','online-indicator-for-twitch'),'description' => __('If unchecked, Twitch will open in the same window.','online-indicator-for-twitch'), 'section' => 'oift_main_section',));
                 
                 /* live text */
-                $wp_customize->add_setting('oift_live_text',array('default' => '','sanitize_callback' => 'sanitize_oift_live_text',));
-                function sanitize_oift_live_text($input) {return sanitize_text_field($input);}
+                $wp_customize->add_setting('oift_live_text',array('default' => '','sanitize_callback' => 'oift_sanitize_live_text',));
+                function oift_sanitize_live_text($input) {return sanitize_text_field($input);}
                 $wp_customize->add_control('oift_live_text',array('type' => 'text','label' => __('Status text if stream is live','online-indicator-for-twitch'),'description' => __('If empty, defaults to "LIVE on Twitch"','online-indicator-for-twitch'),'section' => 'oift_main_section',));
                 
                 /* offline text */
-                $wp_customize->add_setting('oift_offline_text',array('default' => '','sanitize_callback' => 'sanitize_oift_offline_text',));
-                function sanitize_oift_offline_text($input) {return sanitize_text_field($input);}
+                $wp_customize->add_setting('oift_offline_text',array('default' => '','sanitize_callback' => 'oift_sanitize_offline_text',));
+                function oift_sanitize_offline_text($input) {return sanitize_text_field($input);}
                 $wp_customize->add_control('oift_offline_text',array('type' => 'text','label' => __('Status text if stream is offline','online-indicator-for-twitch'),'description' => __('If empty, defaults to "OFFLINE on Twitch".','online-indicator-for-twitch'),'section' => 'oift_main_section',));
         
             // Positioning
             $wp_customize->add_section('oift_positioning_section',array('title' => __( 'Position','online-indicator-for-twitch' ),'panel' => 'oift_panel','priority' => 2));
             
                 /* absolute position */
-                $wp_customize->add_setting('oift_absolute_position',array('sanitize_callback' => 'sanitize_oift_absolute_position',));
-                function sanitize_oift_absolute_position( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
+                $wp_customize->add_setting('oift_absolute_position',array('sanitize_callback' => 'oift_sanitize_absolute_position',));
+                function oift_sanitize_absolute_position( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
                 $wp_customize->add_control('oift_absolute_position',array('type' => 'checkbox','label' => __('Absolute positioning','online-indicator-for-twitch'),'description' => __('If unchecked, fixed positioning is applied.','online-indicator-for-twitch'), 'section' => 'oift_positioning_section',));
                 
                 /* vertical placemenet */
                 $wp_customize->add_setting('oift_placement',array(
                     'default' => 'top',
-                    'sanitize_callback' => 'sanitize_oift_placement',
+                    'sanitize_callback' => 'oift_sanitize_placement',
                 ));
-                function sanitize_oift_placement($input) {return in_array($input, array('top', 'bottom'), true) ? $input : 'top';}
+                function oift_sanitize_placement($input) {return in_array($input, array('top', 'bottom'), true) ? $input : 'top';}
                 $wp_customize->add_control('oift_placement',array(
                     'type' => 'select',
                     'label' => __('Vertical placement','online-indicator-for-twitch'),
@@ -70,9 +70,9 @@ function oift_theme_customizer( $wp_customize ) {
                 /* horizontal placemenet */
                 $wp_customize->add_setting('oift_placement_horizontal',array(
                     'default' => 'left',
-                    'sanitize_callback' => 'sanitize_oift_placement_horizontal',
+                    'sanitize_callback' => 'oift_sanitize_placement_horizontal',
                 ));
-                function sanitize_oift_placement_horizontal($input) {return in_array($input, array('left', 'right'), true) ? $input : 'left';}
+                function oift_sanitize_placement_horizontal($input) {return in_array($input, array('left', 'right'), true) ? $input : 'left';}
                 $wp_customize->add_control('oift_placement_horizontal',array(
                     'type' => 'select',
                     'label' => __('Horizontal placement','online-indicator-for-twitch'),
@@ -84,13 +84,13 @@ function oift_theme_customizer( $wp_customize ) {
                 ));
                 
                 /* top/bottom distance */
-                $wp_customize->add_setting('oift_vertical_distance',array('default' => '','sanitize_callback' => 'sanitize_oift_vertical_distance',));
-                function sanitize_oift_vertical_distance($input) {return ($input === '') ? '' : absint($input);}
+                $wp_customize->add_setting('oift_vertical_distance',array('default' => '','sanitize_callback' => 'oift_sanitize_vertical_distance',));
+                function oift_sanitize_vertical_distance($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_vertical_distance',array('type' => 'text','label' => __('Top/bottom distance (in pixels)','online-indicator-for-twitch'),'description' => __('Example: 50 (if empty, defaults to 50).','online-indicator-for-twitch'),'section' => 'oift_positioning_section',));
                 
                 /* left distance */
-                $wp_customize->add_setting('oift_horizontal_distance',array('default' => '','sanitize_callback' => 'sanitize_oift_horizontal_distance',));
-                function sanitize_oift_horizontal_distance($input) {return ($input === '') ? '' : absint($input);}
+                $wp_customize->add_setting('oift_horizontal_distance',array('default' => '','sanitize_callback' => 'oift_sanitize_horizontal_distance',));
+                function oift_sanitize_horizontal_distance($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_horizontal_distance',array('type' => 'text','label' => __('Left/right distance (in pixels)','online-indicator-for-twitch'),'description' => __('Example: 50 (if empty, defaults to 20).','online-indicator-for-twitch'),'section' => 'oift_positioning_section',));
             
             // Graphics
@@ -127,21 +127,21 @@ function oift_theme_customizer( $wp_customize ) {
                 ));
                 
                 /* rounded corners */
-                $wp_customize->add_setting('oift_rounded_corners',array('default' => '','sanitize_callback' => 'sanitize_oift_rounded_corners',));
-                function sanitize_oift_rounded_corners($input) {return ($input === '') ? '' : absint($input);}
+                $wp_customize->add_setting('oift_rounded_corners',array('default' => '','sanitize_callback' => 'oift_sanitize_rounded_corners',));
+                function oift_sanitize_rounded_corners($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_rounded_corners',array('type' => 'text','label' => __('Rounded corners (in pixels)','online-indicator-for-twitch'),'description' => __('Example: 5 (if empty, defaults to 0).','online-indicator-for-twitch'),'section' => 'oift_graphics_section',));
         
                 /* disable status text underline */
-                $wp_customize->add_setting('oift_no_underline',array('sanitize_callback' => 'sanitize_oift_no_underline',));
-                function sanitize_oift_no_underline( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
+                $wp_customize->add_setting('oift_no_underline',array('sanitize_callback' => 'oift_sanitize_no_underline',));
+                function oift_sanitize_no_underline( $input ) { if ( $input == 1 ) { return 1; } else { return ''; } }
                 $wp_customize->add_control('oift_no_underline',array('type' => 'checkbox','label' => __('Enable underline on hover','online-indicator-for-twitch'),'description' => __('When checked text will be underlined when hovered.','online-indicator-for-twitch'), 'section' => 'oift_graphics_section',));
         
             // Hide On Mobile
             $wp_customize->add_section('oift_misc_section',array('title' => __( 'Hide On Mobile','online-indicator-for-twitch' ),'panel' => 'oift_panel','priority' => 3));
 
                 /* smaller than */
-                $wp_customize->add_setting('oift_smaller_than',array('sanitize_callback' => 'sanitize_oift_smaller_than',));
-                function sanitize_oift_smaller_than($input) {return ($input === '') ? '' : absint($input);}
+                $wp_customize->add_setting('oift_smaller_than',array('sanitize_callback' => 'oift_sanitize_smaller_than',));
+                function oift_sanitize_smaller_than($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_smaller_than',array(
                     'type' => 'text',
                     'label' => __('Hide at certain width/resolution','online-indicator-for-twitch'),
@@ -150,8 +150,8 @@ function oift_theme_customizer( $wp_customize ) {
                 ));
                 
                 /* larger than */
-                $wp_customize->add_setting('oift_larger_than',array('sanitize_callback' => 'sanitize_oift_larger_than',));
-                function sanitize_oift_larger_than($input) {return ($input === '') ? '' : absint($input);}
+                $wp_customize->add_setting('oift_larger_than',array('sanitize_callback' => 'oift_sanitize_larger_than',));
+                function oift_sanitize_larger_than($input) {return ($input === '') ? '' : absint($input);}
                 $wp_customize->add_control('oift_larger_than',array(
                     'type' => 'text',
                     'description' => __('..and:','online-indicator-for-twitch'),
@@ -210,8 +210,8 @@ function oift_theme_customizer( $wp_customize ) {
     }
     
 	// Add 'Settings' link to plugin page
-    add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'add_oift_action_links' );
-    function add_oift_action_links ( $links ) {
+    add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'oift_add_action_links' );
+    function oift_add_action_links ( $links ) {
         $mylinks = array(
         '<a href="' . admin_url( 'customize.php?autofocus[panel]=oift_panel' ) . '">Settings</a>'
         );
@@ -225,17 +225,12 @@ function oift_theme_customizer( $wp_customize ) {
 	}
 	add_action( 'wp_enqueue_scripts', 'oift_css' );
     
-	// Translation-ready
-    function oift_load_plugin_textdomain() {
-        load_plugin_textdomain( 'online-indicator-for-twitch', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
-    }
-    add_action( 'plugins_loaded', 'oift_load_plugin_textdomain' );
 
     // Admin notice if config missing
     function oift_configuration_missing() {
         ?>
         <div class="notice notice-warning is-dismissible">
-            <p><?php _e( 'Online Indicator for Twitch Plugin: You need to <a href="customize.php?autofocus[section]=oift_main_section">configure</a> your twitch channel name.', 'online-indicator-for-twitch' ); ?></p>
+            <p><?php echo wp_kses( __( 'Online Indicator for Twitch Plugin: You need to <a href="customize.php?autofocus[section]=oift_main_section">configure</a> your twitch channel name.', 'online-indicator-for-twitch' ), array( 'a' => array( 'href' => array() ) ) ); ?></p>
         </div>
         <?php
     }

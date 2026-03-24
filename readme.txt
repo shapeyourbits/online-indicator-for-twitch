@@ -7,8 +7,8 @@ Tags: twitch, twitch online status, twitch live status, twitch stream status, st
 Donate link: https://www.shapeyourbits.co.uk/
 Requires at least: 5.7
 Requires PHP: 7.2
-Tested up to: 6.7
-Stable tag: 1.3.4
+Tested up to: 6.9
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ Yes completely free!
 Absolutely check out our <a href="https://www.shapeyourbits.co.uk/">website</a>.
 
 == Changelog ==
+= 1.3.5 =
+* Conforming to more modern WordPress plugin standards.
+
 = 1.3.4 =
 * While updating the release compatibility did a security audit and improved the escaping of admin variables into the output. This was low risk, but on multi-site installations it could have been used by an a admin to try to gain superadmin.
 
