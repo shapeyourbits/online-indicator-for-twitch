@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Online Indicator for Twitch
-Plugin URI: https://bespokeweb.dev/plugins/twitch/
+Plugin URI: https://www.shapeyourbits.co.uk/plugins/twitch/
 Description: Add a streaming indicator to let your visitors know when your Twitch channel is live.
-Version: 1.3.2
+Version: 1.3.3
 Author: ShapeYourBits
-Author URI: https://bespokeweb.dev/
+Author URI: https://www.shapeyourbits.co.uk/
 Text Domain: online-indicator-for-twitch
 Domain Path: /languages
 License: GPL2

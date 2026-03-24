@@ -76,6 +76,9 @@ Yes completely free!
 Absolutely check out our <a href="https://www.shapeyourbits.co.uk/">website</a>.
 
 == Changelog ==
+= 1.3.3 =
+* Tested up to 6.7
+
 = 1.3.2 =
 * Small change to z-index to use 100000 instead of 10000000 to allow it to appear under certain lightbox overlays.
 
